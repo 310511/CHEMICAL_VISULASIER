@@ -1,0 +1,81 @@
+name: 🚀 Deploy to Netlify + Render
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy-frontend:
+    runs-on: ubuntu-latest
+    name: 🎨 Deploy Frontend to Netlify
+    
+    steps:
+    - name: 📥 Checkout
+      uses: actions/checkout@v4
+      
+    - name: 🟢 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: frontend-web/package-lock.json
+        
+    - name: 📦 Install Dependencies
+      run: |
+        cd frontend-web
+        npm ci
+        
+    - name: 🔨 Build Frontend
+      run: |
+        cd frontend-web
+        npm run build
+        
+    - name: 🚀 Deploy to Netlify
+      uses: netlify/actions/cli@master
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+      with:
+        args: deploy --prod --dir=frontend-web/build
+        
+    - name: 📊 Deployment Status
+      run: |
+        echo "## 🎯 Frontend Deployment Status" >> $GITHUB_STEP_SUMMARY
+        echo "✅ **Frontend**: Deployed to Netlify" >> $GITHUB_STEP_SUMMARY
+        echo "🌐 **Live Site**: https://chemical-equipment-visualizer.netlify.app" >> $GITHUB_STEP_SUMMARY
+
+  deploy-backend:
+    runs-on: ubuntu-latest
+    name: ⚙️ Deploy Backend to Render
+    needs: deploy-frontend
+    
+    steps:
+    - name: 📥 Checkout
+      uses: actions/checkout@v4
+      
+    - name: 🐍 Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        
+    - name: 📦 Install Dependencies
+      run: |
+        cd backend
+        pip install -r requirements.txt
+        
+    - name: 🧪 Test Backend
+      run: |
+        cd backend
+        python manage.py test
+        
+    - name: 🚀 Deploy to Render
+      uses: johnbeynon/render-action@v1.0.0
+      with:
+        service-id: ${{ secrets.RENDER_SERVICE_ID }}
+        api-key: ${{ secrets.RENDER_API_KEY }}
+        
+    - name: 📊 Deployment Status
+      run: |
+        echo "## 🎯 Backend Deployment Status" >> $GITHUB_STEP_SUMMARY
+        echo "✅ **Backend**: Deployed to Render" >> $GITHUB_STEP_SUMMARY
+        echo "🌐 **API URL**: https://chemical-equipment-backend.onrender.com" >> $GITHUB_STEP_SUMMARY

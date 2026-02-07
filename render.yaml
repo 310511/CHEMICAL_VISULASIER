@@ -1,0 +1,25 @@
+services:
+  # Production Django Web Service
+  - type: web
+    name: chemical-equipment-backend
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
+    healthCheckPath: /admin/
+    healthCheckTimeout: 100
+    autoDeploy: true
+    plan: free
+    region: oregon
+    branch: main
+    rootDir: backend
+    envVars:
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: "chemical-equipment-backend.onrender.com"
+      - key: CORS_ALLOWED_ORIGINS
+        value: "https://chemical-equipment-visualizer.netlify.app,https://chemical-equipment-backend.onrender.com"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        value: sqlite:///app.db

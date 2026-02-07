@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
+const API_BASE_URL = process.env.NODE_ENV === 'production' 
+  ? 'https://chemical-equipment-backend.onrender.com/api'
+  : 'http://localhost:8000/api';
 
 // Create axios instance
 const api = axios.create({
