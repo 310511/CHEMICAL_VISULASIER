@@ -35,7 +35,7 @@ class AnalyticsTab(QWidget):
         # Chart type selector
         chart_type_layout = QHBoxLayout()
         chart_type_label = QLabel("Chart Type:")
-        chart_type_label.setFont(QFont("Arial", 10, QFont.Bold))
+        chart_type_label.setStyleSheet("color: #2c3e50; font-size: 12px; font-weight: bold;")
         self.chart_type_combo = QComboBox()
         self.chart_type_combo.addItems(["Bar Chart", "Line Chart"])
         self.chart_type_combo.currentTextChanged.connect(self.update_charts)
@@ -75,15 +75,18 @@ class AnalyticsTab(QWidget):
         self.setStyleSheet("""
             QGroupBox {
                 font-weight: bold;
-                border: 2px solid #cccccc;
-                border-radius: 5px;
+                color: #2c3e50;
+                border: 2px solid #dee2e6;
+                border-radius: 8px;
                 margin-top: 1ex;
                 padding-top: 10px;
+                background-color: white;
             }
             QGroupBox::title {
                 subcontrol-origin: margin;
                 left: 10px;
-                padding: 0 5px 0 5px;
+                padding: 0 5px;
+                color: #2c3e50;
             }
             QPushButton {
                 background-color: #28a745;
@@ -99,17 +102,27 @@ class AnalyticsTab(QWidget):
             QPushButton:pressed {
                 background-color: #1e7e34;
             }
-            QPushButton:disabled {
-                background-color: #cccccc;
-            }
             QComboBox {
-                padding: 5px;
-                border: 1px solid #ddd;
-                border-radius: 4px;
+                border: 2px solid #dee2e6;
+                border-radius: 6px;
+                padding: 6px 12px;
                 background-color: white;
+                color: #2c3e50;
+                font-size: 12px;
             }
-            QComboBox:focus {
-                border-color: #007bff;
+            QComboBox:hover {
+                border-color: #667eea;
+            }
+            QComboBox::drop-down {
+                border: none;
+                width: 20px;
+            }
+            QComboBox::down-arrow {
+                image: none;
+                border-left: 4px solid transparent;
+                border-right: 4px solid transparent;
+                border-top: 4px solid #667eea;
+                margin-right: 4px;
             }
         """)
     

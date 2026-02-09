@@ -69,11 +69,11 @@ class DataViewTab(QWidget):
         for label_text, key, unit in summary_items:
             item_layout = QHBoxLayout()
             label = QLabel(label_text)
-            label.setFont(QFont("Arial", 10, QFont.Bold))
+            label.setStyleSheet("color: #2c3e50; font-size: 12px; font-weight: bold;")
             value_label = QLabel("0")
             value_label.setStyleSheet("color: #007bff; font-size: 14px; font-weight: bold;")
             unit_label = QLabel(unit)
-            unit_label.setStyleSheet("color: #666; font-size: 12px;")
+            unit_label.setStyleSheet("color: #495057; font-size: 12px;")
             
             item_layout.addWidget(label)
             item_layout.addWidget(value_label)
@@ -121,15 +121,18 @@ class DataViewTab(QWidget):
         self.setStyleSheet("""
             QGroupBox {
                 font-weight: bold;
-                border: 2px solid #cccccc;
-                border-radius: 5px;
+                color: #2c3e50;
+                border: 2px solid #dee2e6;
+                border-radius: 8px;
                 margin-top: 1ex;
                 padding-top: 10px;
+                background-color: white;
             }
             QGroupBox::title {
                 subcontrol-origin: margin;
                 left: 10px;
-                padding: 0 5px 0 5px;
+                padding: 0 5px;
+                color: #2c3e50;
             }
             QPushButton {
                 background-color: #007bff;
@@ -155,16 +158,17 @@ class DataViewTab(QWidget):
             }
             QTableWidget::item {
                 padding: 5px;
-                color: black;  /* Force black text for all items */
+                color: #2c3e50;  /* Dark text for visibility */
             }
             QTableWidget::item:selected {
                 background-color: #007bff;
                 color: white;
             }
             QHeaderView::section {
-                background-color: #f0f0f0;
-                padding: 5px;
-                border: 1px solid #d0d0d0;
+                background-color: #667eea;
+                color: white;
+                padding: 8px;
+                border: none;
                 font-weight: bold;
             }
         """)

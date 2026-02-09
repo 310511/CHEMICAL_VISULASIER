@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtCore import Qt, QThread, pyqtSignal
 from PyQt5.QtGui import QFont, QIcon
 
-from .api_client import APIClient
+from api_client import APIClient
 
 class LoginThread(QThread):
     """Thread for handling login to avoid UI freezing"""

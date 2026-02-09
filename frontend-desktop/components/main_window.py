@@ -12,10 +12,10 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtCore import Qt, QThread, pyqtSignal, QTimer
 from PyQt5.QtGui import QIcon, QFont
 
-from .api_client import APIClient
-from .data_view_tab import DataViewTab
-from .analytics_tab import AnalyticsTab
-from .history_tab import HistoryTab
+from api_client import APIClient
+from data_view_tab import DataViewTab
+from analytics_tab import AnalyticsTab
+from history_tab import HistoryTab
 
 class DataRefreshThread(QThread):
     """Thread for refreshing data to avoid UI freezing"""
@@ -89,27 +89,31 @@ class MainWindow(QMainWindow):
                 background: linear-gradient(135deg, #667eea, #764ba2);
                 border: none;
                 border-bottom: 2px solid #667eea;
+                border-radius: 8px 8px 0 0;
             }
             
             QTabWidget::tab {
                 background-color: transparent;
-                color: rgba(255, 255, 255, 0.7);
+                color: rgba(255, 255, 255, 0.8);
                 padding: 12px 24px;
                 margin-right: 2px;
                 border: none;
                 font-weight: 600;
+                font-size: 13px;
+                border-radius: 8px 8px 0 0;
                 min-width: 120px;
             }
             
             QTabWidget::tab:selected {
-                background-color: #667eea;
-                color: white;
+                background-color: rgba(255, 255, 255, 0.95);
+                color: #667eea;
                 border-radius: 8px 8px 0 0;
+                box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
             }
             
             QTabWidget::tab:hover {
-                background-color: rgba(102, 126, 234, 0.1);
-                color: white;
+                background-color: rgba(255, 255, 255, 0.9);
+                color: #667eea;
             }
             
             QMenuBar {
@@ -209,6 +213,7 @@ class MainWindow(QMainWindow):
                 padding: 8px;
                 border: none;
                 color: #2c3e50;
+                background-color: white;
             }
             
             QTableWidget::item:selected {
@@ -224,6 +229,19 @@ class MainWindow(QMainWindow):
                 font-weight: 600;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
+            }
+            
+            QHeaderView::section:horizontal {
+                background-color: #667eea;
+                color: white;
+                border: 1px solid #5a67d8;
+            }
+            
+            QHeaderView::section:vertical {
+                background-color: #f8f9fa;
+                color: #2c3e50;
+                border: 1px solid #dee2e6;
+                width: 30px;
             }
             
             QProgressDialog {
@@ -273,10 +291,10 @@ class MainWindow(QMainWindow):
         self.analytics_tab = AnalyticsTab(self.api_client)
         self.history_tab = HistoryTab(self.api_client)
         
-        # Add tabs to widget with icons
-        self.tab_widget.addTab(self.data_view_tab, " Data View")
-        self.tab_widget.addTab(self.analytics_tab, " Analytics")
-        self.tab_widget.addTab(self.history_tab, " History")
+        # Add tabs to widget with icons and proper styling
+        self.tab_widget.addTab(self.data_view_tab, "📊 Data View")
+        self.tab_widget.addTab(self.analytics_tab, "📈 Analytics")
+        self.tab_widget.addTab(self.history_tab, "📋 History")
         
         # Add tab widget to main layout
         main_layout.addWidget(self.tab_widget)

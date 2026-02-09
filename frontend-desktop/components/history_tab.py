@@ -89,15 +89,18 @@ class HistoryTab(QWidget):
         self.setStyleSheet("""
             QGroupBox {
                 font-weight: bold;
-                border: 2px solid #cccccc;
-                border-radius: 5px;
+                color: #2c3e50;
+                border: 2px solid #dee2e6;
+                border-radius: 8px;
                 margin-top: 1ex;
                 padding-top: 10px;
+                background-color: white;
             }
             QGroupBox::title {
                 subcontrol-origin: margin;
                 left: 10px;
-                padding: 0 5px 0 5px;
+                padding: 0 5px;
+                color: #2c3e50;
             }
             QPushButton {
                 background-color: #007bff;
@@ -123,16 +126,30 @@ class HistoryTab(QWidget):
             }
             QTableWidget::item {
                 padding: 5px;
+                color: #2c3e50;
+                background-color: white;
             }
             QTableWidget::item:selected {
                 background-color: #007bff;
                 color: white;
             }
             QHeaderView::section {
-                background-color: #f0f0f0;
-                padding: 5px;
-                border: 1px solid #d0d0d0;
+                background-color: #667eea;
+                color: white;
+                padding: 8px;
+                border: none;
                 font-weight: bold;
+            }
+            QHeaderView::section:horizontal {
+                background-color: #667eea;
+                color: white;
+                border: 1px solid #5a67d8;
+            }
+            QHeaderView::section:vertical {
+                background-color: #f8f9fa;
+                color: #2c3e50;
+                border: 1px solid #dee2e6;
+                width: 30px;
             }
         """)
     
