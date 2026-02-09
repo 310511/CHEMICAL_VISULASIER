@@ -57,7 +57,59 @@ A complete hybrid web + desktop application for chemical equipment data visualiz
 - **requests 2.31.0**
 - **pandas 2.1.3**
 
-## 📋 Prerequisites
+### Deployment & CI/CD
+- **GitHub Actions** for automated deployment
+- **Netlify** for frontend hosting
+- **Render** for backend hosting
+- **Docker** support for containerization
+
+## � Repository Structure
+
+```
+CHEMICAL_VISULASIER/
+├── backend/                          # Django REST API
+│   ├── config/                       # Django project configuration
+│   │   ├── settings.py               # Main settings file
+│   │   ├── urls.py                  # API URL routing
+│   │   └── wsgi.py                  # WSGI configuration
+│   ├── equipment/                    # Equipment data app
+│   │   ├── models.py                 # Database models
+│   │   ├── serializers.py            # API serializers
+│   │   ├── views.py                  # API views
+│   │   └── urls.py                  # App URL routing
+│   ├── requirements.txt               # Python dependencies
+│   └── manage.py                    # Django management script
+├── frontend-web/                     # React web application
+│   ├── public/                       # Static files
+│   ├── src/                         # Source code
+│   │   ├── components/               # React components
+│   │   ├── pages/                   # Page components
+│   │   ├── api.js                   # API client
+│   │   └── index.css                # Global styles
+│   ├── package.json                  # Node dependencies
+│   └── package-lock.json             # Dependency lock file
+├── frontend-desktop/                 # PyQt5 desktop application
+│   ├── components/                   # Desktop UI components
+│   │   ├── main_window.py           # Main application window
+│   │   ├── data_view_tab.py        # Data view tab
+│   │   ├── analytics_tab.py         # Analytics tab
+│   │   ├── history_tab.py           # History tab
+│   │   ├── login_dialog.py          # Login dialog
+│   │   └── api_client.py           # API client
+│   ├── main.py                      # Desktop app entry point
+│   └── requirements.txt              # Python dependencies
+├── .github/                         # GitHub workflows
+│   └── workflows/                   # CI/CD configurations
+│       ├── deploy.yml                 # GitHub Pages deployment
+│       └── deploy-separate.yml        # Separate deployment workflow
+├── netlify.toml                     # Netlify deployment config
+├── render.yaml                      # Render deployment config
+├── sample_equipment_data.csv          # Sample data file
+├── README.md                        # This documentation
+└── .gitignore                       # Git ignore rules
+```
+
+## �📋 Prerequisites
 
 - **Python 3.8 or higher**
 - **Node.js 16 or higher**
@@ -302,24 +354,99 @@ npm test
 **Problem:** UI freezing during operations
 **Solution:** Ensure all API calls are made in separate threads
 
-## 🚀 Deployment
+## 🚀 Deployment Options
 
-### Backend Deployment
-1. Set `DEBUG = False` in settings.py
-2. Configure production database
-3. Set up static files serving
-4. Configure web server (nginx/Apache)
-5. Set up WSGI (gunicorn/uwsgi)
+### 🌐 Automated Deployment (Recommended)
 
-### Web Frontend Deployment
-1. Run `npm run build`
-2. Serve build directory with web server
-3. Configure API base URL for production
+#### GitHub Actions + Netlify + Render
+The repository includes automated deployment workflows:
 
-### Desktop Application Deployment
-1. Use PyInstaller to create executable
-2. Package with required dependencies
-3. Create installer for target platform
+1. **Frontend to Netlify:**
+   - Push to `main` branch triggers automatic deployment
+   - URL: `https://chemical-equipment-visualizer.netlify.app`
+   - Environment variables configured in `netlify.toml`
+
+2. **Backend to Render:**
+   - Push to `main` branch triggers automatic deployment
+   - URL: `https://chemical-equipment-backend.onrender.com`
+   - Configuration in `render.yaml`
+
+3. **CI/CD Workflow:**
+   - Located in `.github/workflows/deploy-separate.yml`
+   - Automatic testing and deployment
+   - Separate frontend and backend deployment
+
+### 🛠️ Manual Deployment
+
+#### Backend Deployment Options
+1. **Render (Recommended):**
+   - Connect GitHub repository
+   - Use `render.yaml` configuration
+   - Auto-deploy on push
+
+2. **Heroku:**
+   ```bash
+   # Install Heroku CLI
+   heroku create your-app-name
+   heroku buildpacks:add heroku/python
+   git push heroku main
+   ```
+
+3. **DigitalOcean/AWS:**
+   - Set up server with Docker
+   - Configure nginx reverse proxy
+   - Use gunicorn WSGI server
+
+#### Frontend Deployment Options
+1. **Netlify (Recommended):**
+   - Drag and drop build folder
+   - Or connect GitHub repository
+   - Configure redirects in `netlify.toml`
+
+2. **Vercel:**
+   ```bash
+   npm install -g vercel
+   vercel --prod
+   ```
+
+3. **GitHub Pages:**
+   ```bash
+   npm run build
+   # Deploy dist folder to gh-pages branch
+   ```
+
+#### Desktop Application Distribution
+1. **PyInstaller:**
+   ```bash
+   cd frontend-desktop
+   pip install pyinstaller
+   pyinstaller --onefile --windowed main.py
+   ```
+
+2. **Create Installers:**
+   - Windows: Use Inno Setup or NSIS
+   - macOS: Use create-dmg
+   - Linux: Use AppImage or Snap
+
+### 📋 Environment Variables
+
+#### Production Environment
+```bash
+# Backend (.env)
+DEBUG=False
+SECRET_KEY=your-secret-key
+DATABASE_URL=your-database-url
+CORS_ALLOWED_ORIGINS=https://your-frontend-domain.com
+
+# Frontend (.env)
+REACT_APP_API_URL=https://your-backend-domain.com/api
+```
+
+#### Local Development
+```bash
+# Backend uses SQLite by default
+# Frontend connects to http://localhost:8000/api
+```
 
 ## 🔮 Future Enhancements
 
